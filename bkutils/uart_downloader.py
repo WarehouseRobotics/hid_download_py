@@ -9,7 +9,7 @@
 
 import time
 from .boot_intf import CBootIntf
-import serial 
+import serial
 from serial import Timeout
 #from serial import serialutil
 import binascii
@@ -46,7 +46,7 @@ class UartDownloader(object):
         self.pbar = None
         self.bootItf = CBootIntf(port, 115200, 0)
         self.log("UartDownloader....")
-        
+
     def log(self, text):
         """
         print text to tqdm progress bar
@@ -114,7 +114,7 @@ class UartDownloader(object):
         ss = startAddr & 0xfffff000     # 4K对齐的地址
         self.log("len: {:x}".format(length))
         self.log("startAddr: {:x}".format(ss))
-        
+
         while i < length:
             self.log("Reading {:x}".format(ss+i))
             data = self.bootItf.ReadSector(ss+i)
@@ -135,7 +135,7 @@ class UartDownloader(object):
 
         #self.pbar.close()
         self.pbar = None
-        
+
         if self.unprotect:
             self._Do_Boot_ProtectFlash(mid, False)
 
@@ -185,7 +185,7 @@ class UartDownloader(object):
         self.pbar = tqdm(total=total_num, ascii=True, ncols=80, unit_scale=True,
                 unit='k', bar_format='{desc}|{bar}|[{rate_fmt:>8}]')
         self.log("Getting Bus...")
-        timeout = Timeout(10)
+        timeout = Timeout(120)
 
         # Step2: Link Check
         count = 0
